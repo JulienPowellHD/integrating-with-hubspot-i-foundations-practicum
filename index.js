@@ -14,7 +14,7 @@ const PRIVATE_APP_ACCESS = '';
 
 // * Code for Route 1 goes here
 app.get('/', async (req, res) => {
-    const companiesObjects = 'https://api.hubspot.com/crm/v3/objects/0-2';
+    const companiesObjects = 'https://api.hubspot.com/crm/v3/objects/0-2?properties=name,about_us,annualrevenue';
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ app.get('/', async (req, res) => {
     try {
         const resp = await axios.get(companiesObjects, { headers });
         const data = resp.data.results;
-        res.render('companies', { title: 'Homepage | Companies Objects', data });
+        res.render('homepage', { title: 'Homepage | Companies Objects', data });
     } catch (error) {
         console.error(error);
     }
@@ -32,13 +32,17 @@ app.get('/', async (req, res) => {
 
 // * Code for Route 2 goes here
 app.get('/update-cobj', async (req, res) => {
+    const companiesObjects = 'https://api.hubspot.com/crm/v3/objects/0-2?properties=name,about_us,annualrevenue';
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
     try {
+        const resp = await axios.get(companiesObjects, { headers });
+        const data = resp.data.results;
         res.render('updates', { 
-            title: 'Create/Update Companies Object',
-            data: req.query.id ? {
-                id: req.query.id,
-                ...req.query
-            } : null
+            title: 'Update Company Object Form | Integrating With HubSpot I Practicum',
+            data: data
         });
     } catch (error) {
         console.error(error);

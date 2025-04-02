@@ -5,11 +5,22 @@ html
         meta(name="viewport" content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/style.css")
     body    
-        h1 Update Companies Object Form | Integrating With HubSpot I Practicum
-        .cards 
-            each company in data
-                .card 
-                    h2.card__name #{company.properties.name}
-                    p.card__about #{company.properties.about_us}
-                    p.card__revenue #{company.properties.annualrevenue}
-                    a(href="/") Return to the homepage
+        h1 Edit Companies
+        form(action="/update-cobj" method="POST")
+            table.styled-table
+                thead
+                    tr.header-row
+                        th.company-name Company Name
+                        th.about-us About Us 
+                        th.revenue Annual Revenue
+                tbody.table-body
+                    each company in data
+                        tr.table-row
+                            input(type="hidden" name=`id` value=company.id)
+                            td.table-cell
+                                input(type="text" name="name" value=company.properties.name)
+                            td.table-cell
+                                input(type="text" name="about_us" value=company.properties.about_us)
+                            td.table-cell
+                                input(type="number" name="annualrevenue" value=company.properties.annualrevenue)
+            button(type="submit").save-button Save Changes
