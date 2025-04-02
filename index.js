@@ -14,15 +14,15 @@ const PRIVATE_APP_ACCESS = '';
 
 // * Code for Route 1 goes here
 app.get('/', async (req, res) => {
-    const customObjects = 'https://api.hubspot.com/crm/v3/objects/0-2';
+    const companiesObjects = 'https://api.hubspot.com/crm/v3/objects/0-2';
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         'Content-Type': 'application/json'
     }
     try {
-        const resp = await axios.get(customObjects, { headers });
+        const resp = await axios.get(companiesObjects, { headers });
         const data = resp.data.results;
-        res.render('index', { title: 'Homepage | Custom Objects', data });
+        res.render('companies', { title: 'Homepage | Companies Objects', data });
     } catch (error) {
         console.error(error);
     }
@@ -33,8 +33,8 @@ app.get('/', async (req, res) => {
 // * Code for Route 2 goes here
 app.get('/update-cobj', async (req, res) => {
     try {
-        res.render('form', { 
-            title: 'Create/Update Custom Object',
+        res.render('updates', { 
+            title: 'Create/Update Companies Object',
             data: req.query.id ? {
                 id: req.query.id,
                 ...req.query
