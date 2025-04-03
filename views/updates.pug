@@ -9,18 +9,18 @@ html
         form(action="/update-cobj" method="POST")
             table.styled-table
                 thead
-                    tr.header-row
-                        th.company-name Company Name
-                        th.about-us About Us 
-                        th.revenue Annual Revenue
-                tbody.table-body
-                    each company in data
-                        tr.table-row
-                            input(type="hidden" name=`id` value=company.id)
-                            td.table-cell
-                                input(type="text" name="name" value=company.properties.name)
-                            td.table-cell
-                                input(type="text" name="about_us" value=company.properties.about_us)
-                            td.table-cell
-                                input(type="number" name="annualrevenue" value=company.properties.annualrevenue)
-            button(type="submit").save-button Save Changes
+                    tr
+                        th Company Name
+                        th About Us 
+                        th Annual Revenue
+                tbody
+                    each company, index in data
+                        tr
+                            input(type="hidden" name=`companies[${index}][id]` value=company.id)
+                            td
+                                input(type="text" name=`companies[${index}][name]` value=company.properties.name)
+                            td
+                                input(type="text" name=`companies[${index}][about_us]` value=company.properties.about_us)
+                            td
+                                input(type="number" name=`companies[${index}][annualrevenue]` value=company.properties.annualrevenue)
+            button(type="submit").save-button Save All Changes
