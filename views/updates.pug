@@ -1,0 +1,51 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Edit Companies
+        button(type="button" onclick="addNewRow()").add-row-button Add New Row
+        form(action="/update-cobj" method="POST")
+            table.styled-table
+                thead
+                    tr
+                        th Company Name
+                        th About Us 
+                        th Annual Revenue
+                tbody#tableBody
+                    each company, index in data
+                        tr
+                            input(type="hidden" name=`companies[${index}][id]` value=company.id)
+                            td
+                                input(type="text" name=`companies[${index}][name]` value=company.properties.name)
+                            td
+                                input(type="text" name=`companies[${index}][about_us]` value=company.properties.about_us)
+                            td
+                                input(type="number" name=`companies[${index}][annualrevenue]` value=company.properties.annualrevenue)
+            .button-group
+                button(type="submit").save-button Save All Changes
+                a(href="/").return-button Return to Homepage
+
+        script.
+            function addNewRow() {
+                const tbody = document.getElementById('tableBody');
+                const newIndex = tbody.children.length;
+                
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <input type="hidden" name="companies[${newIndex}][id]" value="">
+                    <td>
+                        <input type="text" name="companies[${newIndex}][name]" value="">
+                    </td>
+                    <td>
+                        <input type="text" name="companies[${newIndex}][about_us]" value="">
+                    </td>
+                    <td>
+                        <input type="number" name="companies[${newIndex}][annualrevenue]" value="">
+                    </td>
+                `;
+                
+                tbody.appendChild(newRow);
+            }

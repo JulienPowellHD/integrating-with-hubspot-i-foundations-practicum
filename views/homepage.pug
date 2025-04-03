@@ -1,0 +1,21 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Companies Table
+        a(href="/update-cobj").add-link Add to this table
+        table.styled-table
+            thead
+                tr.header-row
+                    th.company-name Company Name
+                    th.about-us About Us 
+                    th.revenue Annual Revenue
+            tbody.table-body
+                each company in data
+                    tr.table-row
+                        td.table-cell #{company.properties.name}
+                        td.table-cell #{company.properties.about_us} 
+                        td.table-cell #{company.properties.annualrevenue}
