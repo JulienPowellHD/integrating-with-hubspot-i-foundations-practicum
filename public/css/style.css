@@ -117,10 +117,35 @@ input[type="submit"] {
 .add-link:hover {
     background-color: #007f67;
 }
+/* Update in your CSS file */
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
 
-.save-button {
+.save-button,
+.return-button {
+    padding: 10px 30px;
+    background-color: #009879;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.save-button:hover,
+.return-button:hover {
+    background-color: #007f67;
+}
+
+/* Add to your existing CSS */
+.add-row-button {
     display: block;
-    margin: 20px auto;
+    margin: 20px;
     padding: 10px 30px;
     background-color: #009879;
     color: white;
@@ -130,6 +155,6 @@ input[type="submit"] {
     font-size: 16px;
 }
 
-.save-button:hover {
+.add-row-button:hover {
     background-color: #007f67;
 }

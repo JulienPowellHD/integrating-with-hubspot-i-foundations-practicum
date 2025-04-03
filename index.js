@@ -54,22 +54,34 @@ app.post('/update-cobj', async (req, res) => {
     };
 
     try {
-        // Process each company update in parallel
-        const updatePromises = req.body.companies.map(company => {
-            const update = {
-                properties: {
-                    name: company.name,
-                    about_us: company.about_us,
-                    annualrevenue: company.annualrevenue
-                }
+        // Process each company update/creation in parallel
+        const promises = req.body.companies.map(company => {
+            const properties = {
+                name: company.name,
+                about_us: company.about_us,
+                annualrevenue: company.annualrevenue
             };
 
+            // If company has an ID, update it; otherwise create new
             if (company.id) {
-                return axios.patch(`${customObjects}/${company.id}`, update, { headers });
+                return axios.patch(
+                    `${customObjects}/${company.id}`, 
+                    { properties }, 
+                    { headers }
+                );
+            } else {
+                // Only create new company if at least name is provided
+                if (company.name) {
+                    return axios.post(
+                        customObjects, 
+                        { properties }, 
+                        { headers }
+                    );
+                }
             }
         });
 
-        await Promise.all(updatePromises);
+        await Promise.all(promises.filter(p => p)); // Filter out undefined promises (empty rows)
         res.redirect('/');
     } catch (error) {
         console.error(error);
